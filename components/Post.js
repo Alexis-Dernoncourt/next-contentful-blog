@@ -1,4 +1,3 @@
-import Image from 'next/image'
 import styled from 'styled-components'
 
 const Container = styled.div`
@@ -52,7 +51,7 @@ function Post({ date, image, title }) {
 
   return (
     <Container>
-      <Img alt={description} src={`https:${file.url}`} />
+      <Img alt={description} src={`https:${file.url}`} layout='fill' />
       <Desc>{description}</Desc>
       <Text>
         <H2>{title}</H2>
