@@ -51,7 +51,7 @@ function Post({ date, image, title }) {
 
   return (
     <Container>
-      <Img alt={description} src={`https:${file.url}`} layout='fill' />
+      <Img alt={description} src={`https:${file.url}`} />
       <Desc>{description}</Desc>
       <Text>
         <H2>{title}</H2>
