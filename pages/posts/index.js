@@ -10,7 +10,6 @@ const Main = styled.main`
   align-items: center;
   justify-content: space-between;
   padding: 5rem 0;
-  flex: 1;
   width: 100vw;
   height: calc(100vh - 13rem);
   ${tablet({height: 'max-content'})};

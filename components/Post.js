@@ -9,7 +9,6 @@ const Container = styled.div`
   cursor: pointer;
   display: flex;
   width: 30rem;
-  height: 25rem;
   border-radius: .4rem;
   box-shadow: 0 0 2.4rem #eee;
   transition: all .2s ease-in-out;
