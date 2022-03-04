@@ -1,5 +1,6 @@
 import { createGlobalStyle } from 'styled-components';
 import { normalize } from 'styled-normalize';
+import { mobile } from './responsive';
 
 const GlobalStyles = createGlobalStyle`
   ${normalize};
@@ -25,6 +26,7 @@ const GlobalStyles = createGlobalStyle`
   }
   h3 {
     font-size: 3.5rem;
+    ${mobile({fontSize: '2.2rem'})};
   }
   a {
     text-decoration: none;
@@ -35,7 +37,7 @@ const GlobalStyles = createGlobalStyle`
   }
   p{
     font-size: 1.8rem;
-    margin: 20px 0;
+    margin: 2rem 0;
   }
 `;
 

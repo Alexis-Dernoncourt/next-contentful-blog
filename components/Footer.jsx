@@ -6,22 +6,22 @@ const Foot =styled.footer`
   justify-content: center;
   align-items: center;
   font-size: 1.4rem;
-  padding: 7px 0;
+  padding: .7rem 0;
 `
 const DivContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 5px 0;
+  margin: .5rem 0;
 `
 const SmallText = styled.small`
   font-size: 1.2rem;
-  margin: 5px 0;
+  margin: .5rem 0;
 `
 const Logo = styled.img`
-  width: 20px;
-  height: 20px;
-  margin: 0 5px;
+  width: 2rem;
+  height: 2rem;
+  margin: 0 .5rem;
 `
 
 
