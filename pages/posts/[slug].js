@@ -2,8 +2,8 @@ import React from 'react'
 import Image from 'next/image'
 import ReactMarkdown from 'react-markdown'
 import styled from 'styled-components'
-import { fetchEntries } from '../../utils/contentfulPosts'
 import { getAllPosts, getPostAndMorePosts } from "../../lib/api";
+import { tablet, mobile } from '../../styles/responsive';
 
 const Container = styled.div`
   display: flex;
@@ -12,6 +12,7 @@ const Container = styled.div`
   align-items: center;
   width: 60vw;
   text-align: center;
+  ${tablet({width: '90vw'})};
 `
 const Title = styled.h2`
   display: flex;
@@ -21,10 +22,12 @@ const Title = styled.h2`
   padding: 1.5rem 3rem;
   width: 100%;
   height: max-content;
-  border-radius: 4px;
+  border-radius: .4rem;
+  ${tablet({padding: '1.5rem 2rem'})};
+  ${mobile({padding: '1.5rem 1rem', fontSize: '3.2rem'})};
 `
 const TextContent = styled.div`
-  margin: 30px 0;
+  margin: 3rem 0;
 `
 const DateContent = styled.small`
   margin: 1rem 0 3rem 0;
@@ -52,28 +55,6 @@ const PostByTitle = ({ post }) => {
 
 export default PostByTitle
 
-// export const getStaticProps = async ({ params }) => {
-//   const res = await fetchEntries({ content_type: 'blogPost', 'fields.slug': params.slug})
-//   return {
-//     props: {
-//       post: res[0]
-//     },
-//   }
-// }
-
-// export const getStaticPaths = async () => {
-//     const res = await fetchEntries({ content_type: 'blogPost'})
-//     const paths = res.map(p => {
-//       return {
-//         params: { slug: p.fields.slug }
-//       }
-//     })
-  
-//     return {
-//       paths,
-//       fallback: false
-//     }
-// }
 
 // Fetch for a single post
 export async function getStaticProps({ params }) {

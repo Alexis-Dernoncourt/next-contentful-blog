@@ -5,16 +5,16 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin: 10px;
+  margin: 1rem;
   cursor: pointer;
   display: flex;
-  width: 300px;
-  height: 250px;
-  border-radius: 4px;
-  box-shadow: 0 0 24px #eee;
+  width: 30rem;
+  height: 25rem;
+  border-radius: .4rem;
+  box-shadow: 0 0 2.4rem #eee;
   transition: all .2s ease-in-out;
   &:hover{
-    box-shadow: 0 0 24px #bbb;
+    box-shadow: 0 0 2.4rem #bbb;
     transform: scale(1.01) rotate(1.5deg);
   }
 `
@@ -33,11 +33,11 @@ const DateInfo = styled.small`
   align-self: flex-end;
 `
 const Img = styled.img`
-  max-width: 300px;
+  max-width: 30rem;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  border-radius: 4px 4px 0 0;
+  border-radius: .4rem .4rem 0 0;
 `
 
 const Post = ({ date, image, title, slug }) => {

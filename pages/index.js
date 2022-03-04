@@ -12,7 +12,6 @@ const Main = styled.main`
   align-items: center;
   justify-content: space-between;
   padding: 5rem 0;
-  flex: 1;
   width: 100vw;
   height: calc(100vh - 13rem);
   ${tablet({height: 'max-content'})};
@@ -28,7 +27,7 @@ const LinkContainer = styled.div`
   margin-right: 50rem;
   align-self: flex-end;
   ${mobile({margin: '0 auto'})};
-  ${Width1150px({margin: '50px auto 0'})};
+  ${Width1150px({margin: '5rem auto 0'})};
 `
 const StyledLink = styled.a`
   display: flex;
