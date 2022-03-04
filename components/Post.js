@@ -1,63 +1,57 @@
+import Link from 'next/link'
 import styled from 'styled-components'
 
 const Container = styled.div`
-  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   margin: 10px;
-  width: 300px;
-  color: white;
   cursor: pointer;
-`
-const Desc = styled.div`
-  position: absolute;
-  top: 0;
-  padding: 10px;
-  box-sizing: border-box;
-  background: linear-gradient(0deg, rgba(0, 0, 0, 0) 20%, rgba(0, 0, 0, 1) 100%);
-  height: 100px;
-  opacity: 0;
-  transition: opacity 0.5s;
+  display: flex;
+  width: 300px;
+  height: 250px;
+  border-radius: 4px;
+  box-shadow: 0 0 24px #eee;
+  transition: all .2s ease-in-out;
 
-  ${Container}:hover & {
-    opacity: 1;
+  &:hover{
+    box-shadow: 0 0 24px #bbb;
+    transform: scale(1.01) rotate(1.5deg);
   }
 `
 const Text = styled.div`
-  position: absolute;
-  bottom: 3px;
-  padding: 10px;
-  box-sizing: border-box;
-  width: 100%;
-  height: 70px;
-  background: linear-gradient(0deg, rgba(0, 0, 0, 0.5) 20%, rgba(0, 0, 0, 0) 100%);
+  display: flex;
+  flex-direction: column;
+  margin: 1rem 1.5rem;
 `
 const H2 = styled.h2`
-  margin: 5px;
-  margin-bottom: 0;
+  font-size: 2rem;
 `
-const H3 = styled.h3`
-  margin: 5px;
-  margin-top: 0;
-  font-size: 0.8em;
+const DateInfo = styled.small`
   font-weight: 400;
+  align-self: flex-end;
 `
 const Img = styled.img`
   max-width: 300px;
+  width: 100%;
   height: 100%;
   object-fit: cover;
+  border-radius: 4px 4px 0 0;
 `
 
-function Post({ date, image, title }) {
+const Post = ({ date, image, title, slug }) => {
   let { file, description } = image
 
   return (
-    <Container>
-      <Img alt={description} src={`https:${file.url}`} />
-      <Desc>{description}</Desc>
-      <Text>
-        <H2>{title}</H2>
-        <H3>{new Date(date).toLocaleDateString('fr-FR')}</H3>
-      </Text>
-    </Container>
+    <Link href={`/posts/${slug}`}>
+        <Container>
+          <Img alt={description} src={`https:${file.url}`} />
+          <Text>
+            <H2>{title}</H2>
+            <DateInfo>{new Date(date).toLocaleDateString('fr-FR')}</DateInfo>
+          </Text>
+        </Container>
+    </Link>
   )
 }
 
