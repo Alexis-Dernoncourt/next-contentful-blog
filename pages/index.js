@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import { fetchEntries } from '../utils/contentfulPosts'
+import {getAllPosts} from "../lib/api"
 import Post from '../components/Post'
 import styled from 'styled-components'
 import { mobile, tablet, Width1150px } from '../styles/responsive'
@@ -46,12 +46,17 @@ const Home = ({ posts }) => {
       <title>Next + Contentful Starter</title>
     </Head>
       <Main>
-        <Posts>
-          {posts.map((p) => (
-            <Post key={p.date} date={p.date} image={p.image.fields} title={p.title} slug={p.slug} />
+        { posts.length > 0 ? (
+            <Posts>
+              {posts.map((p) => (
+                <Post key={p.date} date={p.date} image={p.image} title={p.title} slug={p.slug} />
 
-          ))}
-        </Posts>
+              ))}
+            </Posts>
+          ) : (
+            <p style={{ textAlign: 'center' }}>Il n'y a pas encore d'articles!</p>
+          )
+        }
         <LinkContainer>
           <Link href='/posts' passHref>
             <StyledLink>
@@ -67,15 +72,12 @@ const Home = ({ posts }) => {
 
 export default Home
 
-export async function getStaticProps() {
-  const res = await fetchEntries({ content_type: 'blogPost', limit: 6 })
-  const posts = res.map((p) => {
-    return p.fields
-  })
+
+export async function getStaticProps({preview = false}){
+  let posts = (await getAllPosts(preview, "limit:4"))  ?? [];
 
   return {
-    props: {
-      posts,
-    },
+    props: { preview, posts }
   }
+  
 }
