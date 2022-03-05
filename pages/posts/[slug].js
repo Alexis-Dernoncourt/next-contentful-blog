@@ -31,6 +31,7 @@ const Title = styled.h2`
 const TextContent = styled.div`
   margin: 3rem 0;
   text-align: justify;
+  ${mobile({padding: '1.5rem 1rem', fontSize: '1.4rem'})};
 `
 const DateContent = styled.small`
   margin: 3rem 0 1rem 0;
@@ -38,6 +39,7 @@ const DateContent = styled.small`
   text-align: center;
   color: #5e5e5e;
   ${Width1460px({textAlign: 'right'})};
+  ${mobile({padding: '0 1rem'})};
 `
 const RelatedContainer = styled.div`
   display: flex;
