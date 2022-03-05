@@ -30,6 +30,7 @@ const H2 = styled.h2`
 const DateInfo = styled.small`
   font-weight: 400;
   align-self: flex-end;
+  color: #5e5e5e;
 `
 const Img = styled.img`
   max-width: 30rem;
@@ -39,12 +40,12 @@ const Img = styled.img`
   border-radius: .4rem .4rem 0 0;
 `
 
-const Post = ({ date, image, title, slug }) => {
+const Post = ({ date, image, title, slug, related }) => {
   let { url, description } = image
 
   return (
     <Link href={`/posts/${slug}`}>
-        <Container>
+        <Container >
           <Img alt={description} src={url} />
           <Text>
             <H2>{title}</H2>

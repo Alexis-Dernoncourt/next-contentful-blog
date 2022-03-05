@@ -2,8 +2,9 @@ import React from 'react'
 import Image from 'next/image'
 import ReactMarkdown from 'react-markdown'
 import styled from 'styled-components'
-import { getAllPosts, getPostAndMorePosts } from "../../lib/api";
-import { tablet, mobile } from '../../styles/responsive';
+import { getPostAndMorePosts } from "../../lib/api";
+import { tablet, mobile, Width1460px } from '../../styles/responsive';
+import Post from '../../components/Post';
 
 const Container = styled.div`
   display: flex;
@@ -11,7 +12,6 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
   width: 60vw;
-  text-align: center;
   ${tablet({width: '90vw'})};
 `
 const Title = styled.h2`
@@ -22,18 +22,43 @@ const Title = styled.h2`
   padding: 1.5rem 3rem;
   width: 100%;
   height: max-content;
+  text-align: center;
   border-radius: .4rem;
   ${tablet({padding: '1.5rem 2rem'})};
   ${mobile({padding: '1.5rem 1rem', fontSize: '3.2rem'})};
 `
 const TextContent = styled.div`
   margin: 3rem 0;
+  text-align: justify;
 `
 const DateContent = styled.small`
-  margin: 1rem 0 3rem 0;
+  margin: 3rem 0 1rem 0;
+  width: 100%;
+  text-align: center;
+  color: #5e5e5e;
+  ${Width1460px({textAlign: 'right'})};
+`
+const RelatedContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 6rem 0;
+  border-top: 1px solid #bbb;
+  border-radius: .4rem;
+  ${mobile({padding: '0 50vw'})};
+`
+const RelatedPostsContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+`
+const RelatedPostsTitle = styled.p`
+  font-size: 1.8rem;
 `
 
-const PostByTitle = ({ post }) => {
+const PostByTitle = ({ post, relatedPosts }) => {
   const { title, content, date, image } = post
   return (
     <Container>
@@ -49,6 +74,21 @@ const PostByTitle = ({ post }) => {
       <TextContent>
         <ReactMarkdown>{content}</ReactMarkdown>
       </TextContent>
+
+
+      { relatedPosts && (
+        <RelatedContainer>
+          <RelatedPostsTitle>
+          Articles récents
+          </RelatedPostsTitle>
+
+          <RelatedPostsContainer>
+            {relatedPosts && relatedPosts.map(post => (
+              <Post key={post.date} date={post.date} image={post.image} title={post.title} slug={post.slug} related={true}/>
+              ))}
+          </RelatedPostsContainer>
+        </RelatedContainer>
+      )}
     </Container>
   )
 }
@@ -56,29 +96,14 @@ const PostByTitle = ({ post }) => {
 export default PostByTitle
 
 
-// Fetch for a single post
-export async function getStaticProps({ params }) {
-  let { post, relatedPosts } = await getPostAndMorePosts(false, params.slug);
-  console.log(post);
-  return {
-      props: {
-        post,
-        relatedPosts
-      }
-  }
-}
+export const getServerSideProps = async ({ params }) => {
+  let preview = false
+  const { post, relatedPosts } = await getPostAndMorePosts(preview, params.slug);
 
-// Fetch the other posts done at build time
-export async function getStaticPaths() {
-  const posts = await getAllPosts(false);
-
-  let paths = posts.map((post) => {
-      return {
-        params: { slug: post.slug },
-      }
-    });
   return {
-      paths,
-      fallback: false
-  }
-}
+    props: {
+      post,
+      relatedPosts
+    },
+  };
+};

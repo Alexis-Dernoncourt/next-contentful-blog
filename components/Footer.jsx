@@ -7,6 +7,8 @@ const Foot =styled.footer`
   align-items: center;
   font-size: 1.4rem;
   padding: .7rem 0;
+  width: 100%;
+  background-color: #f3f3f3;
 `
 const DivContainer = styled.div`
   display: flex;
@@ -18,11 +20,6 @@ const SmallText = styled.small`
   font-size: 1.2rem;
   margin: .5rem 0;
 `
-const Logo = styled.img`
-  width: 2rem;
-  height: 2rem;
-  margin: 0 .5rem;
-`
 
 
 const Footer = () => {
@@ -30,9 +27,7 @@ const Footer = () => {
     <>
       <Foot>
         <DivContainer>
-          Made with
-          <Logo src="/netliheart.svg" alt="Netlify Logo" />
-          and NextJS + Contentful
+          Made with NextJS + Contentful
         </DivContainer>
         <SmallText> 2022 © Alexis Dernoncourt</SmallText>
       </Foot>

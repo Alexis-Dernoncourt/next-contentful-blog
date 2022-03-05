@@ -48,11 +48,14 @@ const PostsList = ({ posts }) => {
 export default PostsList
 
 
-export async function getStaticProps({preview = false}){
-  let posts = (await getAllPosts(preview, "limit:12"))  ?? [];
+export const getServerSideProps = async (ctx) => {
+  let preview = false
+  const posts = (await getAllPosts(preview, "limit:12"))  ?? [];
 
   return {
-    props: { preview, posts }
-  }
-  
-}
+    props: {
+      preview,
+      posts
+    },
+  };
+};
