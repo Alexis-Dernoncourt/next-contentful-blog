@@ -13,6 +13,7 @@ const Container = styled.div`
   align-items: center;
   width: 60vw;
   ${tablet({width: '90vw'})};
+  ${mobile({width: '100vw'})};
 `
 const Title = styled.h2`
   display: flex;
@@ -45,8 +46,6 @@ const RelatedContainer = styled.div`
   align-items: center;
   margin: 6rem 0;
   border-top: 1px solid #bbb;
-  border-radius: .4rem;
-  ${mobile({padding: '0 50vw'})};
 `
 const RelatedPostsContainer = styled.div`
   display: flex;
