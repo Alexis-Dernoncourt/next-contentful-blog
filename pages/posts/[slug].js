@@ -2,8 +2,8 @@ import React from 'react'
 import Image from 'next/image'
 import ReactMarkdown from 'react-markdown'
 import styled from 'styled-components'
-import { getAllPosts, getPostAndMorePosts } from "../../lib/api";
-import { tablet, mobile } from '../../styles/responsive';
+import { getPostAndMorePosts } from "../../lib/api";
+import { tablet, mobile, Width1460px } from '../../styles/responsive';
 import Post from '../../components/Post';
 
 const Container = styled.div`
@@ -34,8 +34,9 @@ const TextContent = styled.div`
 const DateContent = styled.small`
   margin: 3rem 0 1rem 0;
   width: 100%;
-  text-align: right;
+  text-align: center;
   color: #5e5e5e;
+  ${Width1460px({textAlign: 'right'})};
 `
 const RelatedContainer = styled.div`
   display: flex;
