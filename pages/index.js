@@ -1,10 +1,11 @@
 import Head from 'next/head'
-import {getAllPosts} from "../lib/api"
+import {getAllPosts, getAllSectionInfos} from "../lib/api"
 import Post from '../components/Post'
 import styled from 'styled-components'
 import { mobile, tablet, Width1150px } from '../styles/responsive'
 import Link from 'next/link'
 import { MdKeyboardArrowRight } from 'react-icons/md'
+import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 
 const Main = styled.main`
   display: flex;
@@ -15,6 +16,40 @@ const Main = styled.main`
   width: 100vw;
   height: calc(100vh - 13rem);
   ${tablet({height: 'max-content'})};
+`
+const Section = styled.section`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 0 5rem;
+  width: 100vw;
+  height: calc(100vh - 13rem);
+  ${tablet({height: 'max-content'})};
+`
+const DivInfoContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #eee;
+  width: 100%;
+  margin: 0 0 3rem;
+  padding: 2rem 0;
+  ${tablet({padding: '1rem'})};
+`
+const Title = styled.h2`
+  margin: 2rem 0;
+  color: #19273c;
+  ${mobile({fontSize: '3rem'})};
+`
+const Content=styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #575757;
+  ${mobile({textAlign: 'center'})};
 `
 const Posts = styled.div`
   display: flex;
@@ -38,12 +73,24 @@ const StyledLink = styled.a`
   }
 `
 
-const Home = ({ posts }) => {
+const Home = ({ posts, sectionInfos }) => {
+  console.log(sectionInfos[0]);
+  const sectionInfo = sectionInfos[0];
+
+  console.log(sectionInfo.title, sectionInfo.content);
+
   return (
     <>
     <Head>
       <title>Next + Contentful Starter</title>
     </Head>
+    <Section>
+      <DivInfoContainer>
+        <Title>{sectionInfo.title}</Title>
+        <Content>
+          {documentToReactComponents(sectionInfo.textContent.json)}
+        </Content>
+      </DivInfoContainer>
       <Main>
         { posts.length > 0 ? (
             <Posts>
@@ -65,6 +112,7 @@ const Home = ({ posts }) => {
           </Link>
         </LinkContainer>
       </Main>
+    </Section>
     </>
   )
 }
@@ -75,11 +123,13 @@ export default Home
 export const getServerSideProps = async (ctx) => {
   let preview = false
   const posts = (await getAllPosts(preview, "limit:4"))  ?? [];
+  const sectionInfos = (await getAllSectionInfos(preview))  ?? [];
 
   return {
     props: {
       preview,
-      posts
+      posts,
+      sectionInfos
     },
   };
 };
