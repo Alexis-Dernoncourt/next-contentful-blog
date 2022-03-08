@@ -22,11 +22,15 @@ const GlobalStyles = createGlobalStyle`
     font-family: 'Lobster', cursive;
   }
   h2 {
-    font-size: 4.5rem;
+    font-size: 4rem;
   }
   h3 {
-    font-size: 3.5rem;
+    font-size: 3rem;
     ${mobile({fontSize: '2.2rem'})};
+  }
+  h4 {
+    font-size: 2rem;
+    ${mobile({fontSize: '1.6rem'})};
   }
   a {
     text-decoration: none;
@@ -36,8 +40,9 @@ const GlobalStyles = createGlobalStyle`
     list-style: none;
   }
   p{
-    font-size: 1.8rem;
+    font-size: 1.6rem;
     margin: 2rem 0;
+    ${mobile({fontSize: '1.4rem'})};
   }
 `;
 

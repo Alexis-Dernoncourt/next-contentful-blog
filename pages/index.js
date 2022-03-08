@@ -32,7 +32,9 @@ const DivInfoContainer = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-color: #eee;
+  background: #6787A1; /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right,#FFD5BC,#6787A1); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right,#FFD5BC,#6787A1); /* W3C, IE 10+/ Edge, Firefox 16+, */
   width: 100%;
   margin: 0 0 3rem;
   padding: 2rem 0;
@@ -48,7 +50,8 @@ const Content=styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  color: #575757;
+  color: #fff;
+  text-shadow: #6d6969 .1rem 0 .3rem;
   ${mobile({textAlign: 'center'})};
 `
 const Posts = styled.div`
@@ -74,10 +77,7 @@ const StyledLink = styled.a`
 `
 
 const Home = ({ posts, sectionInfos }) => {
-  console.log(sectionInfos[0]);
   const sectionInfo = sectionInfos[0];
-
-  console.log(sectionInfo.title, sectionInfo.content);
 
   return (
     <>
