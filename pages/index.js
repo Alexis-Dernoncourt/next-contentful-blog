@@ -120,7 +120,7 @@ const Home = ({ posts, sectionInfos }) => {
 export default Home
 
 
-export const getServerSideProps = async (ctx) => {
+export const getStaticProps = async () => {
   let preview = false
   const posts = (await getAllPosts(preview, "limit:4"))  ?? [];
   const sectionInfos = (await getAllSectionInfos(preview))  ?? [];

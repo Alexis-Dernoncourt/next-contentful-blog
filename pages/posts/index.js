@@ -48,7 +48,7 @@ const PostsList = ({ posts }) => {
 export default PostsList
 
 
-export const getServerSideProps = async (ctx) => {
+export const getStaticProps = async (ctx) => {
   let preview = false
   const posts = (await getAllPosts(preview, "limit:12"))  ?? [];
 
