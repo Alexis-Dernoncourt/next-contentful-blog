@@ -2,9 +2,10 @@ import React from 'react'
 import Image from 'next/image'
 import ReactMarkdown from 'react-markdown'
 import styled from 'styled-components'
-import { getPostAndMorePosts } from "../../lib/api";
+import { getAllPosts, getPostAndMorePosts } from "../../lib/api";
 import { tablet, mobile, Width1460px } from '../../styles/responsive';
 import Post from '../../components/Post';
+import { useRouter } from 'next/router';
 
 const Container = styled.div`
   display: flex;
@@ -58,46 +59,59 @@ const RelatedPostsContainer = styled.div`
 const RelatedPostsTitle = styled.p`
   font-size: 1.8rem;
 `
+const LoadingText = styled.h4`
+  text-align: center;
+  margin: 4rem auto;
+`
 
 const PostByTitle = ({ post, relatedPosts }) => {
+  const router = useRouter();
+
   const { title, content, date, image } = post
   return (
-    <Container>
-      <Title>{title}</Title>
-      <DateContent>{'Le ' + new Date(date).toLocaleDateString('fr-FR') + ' à ' + new Date(date).toLocaleTimeString('fr-FR').substring(0, 5)}</DateContent>
-      <Image
-        src={image.url}
-        width={image.width}
-        height={image.height}
-        placeholder="blur"
-        blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNcuONKJAAGtwKIyB9ZqAAAAABJRU5ErkJggg=="
-      />
-      <TextContent>
-        <ReactMarkdown>{content}</ReactMarkdown>
-      </TextContent>
+    
+      router.isFallback ? (
+        <LoadingText>
+            Loading...
+        </LoadingText>
+    ) : (
+      <Container>
+        <Title>{title}</Title>
+        <DateContent>{'Le ' + new Date(date).toLocaleDateString('fr-FR') + ' à ' + new Date(date).toLocaleTimeString('fr-FR').substring(0, 5)}</DateContent>
+        <Image
+          src={image.url}
+          width={image.width}
+          height={image.height}
+          placeholder="blur"
+          blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNcuONKJAAGtwKIyB9ZqAAAAABJRU5ErkJggg=="
+        />
+        <TextContent>
+          <ReactMarkdown>{content}</ReactMarkdown>
+        </TextContent>
 
 
-      { relatedPosts && (
-        <RelatedContainer>
-          <RelatedPostsTitle>
-          Articles récents
-          </RelatedPostsTitle>
+        { relatedPosts && (
+          <RelatedContainer>
+            <RelatedPostsTitle>
+            Articles récents
+            </RelatedPostsTitle>
 
-          <RelatedPostsContainer>
-            {relatedPosts && relatedPosts.map(post => (
-              <Post key={post.date} date={post.date} image={post.image} title={post.title} slug={post.slug} related={true}/>
-              ))}
-          </RelatedPostsContainer>
-        </RelatedContainer>
-      )}
-    </Container>
+            <RelatedPostsContainer>
+              {relatedPosts && relatedPosts.map(post => (
+                <Post key={post.date} date={post.date} image={post.image} title={post.title} slug={post.slug} related={true}/>
+                ))}
+            </RelatedPostsContainer>
+          </RelatedContainer>
+        )}
+      </Container>
+    )
   )
 }
 
 export default PostByTitle
 
 
-export const getServerSideProps = async ({ params }) => {
+export const getStaticProps = async ({ params }) => {
   let preview = false
   const { post, relatedPosts } = await getPostAndMorePosts(preview, params.slug);
 
@@ -106,5 +120,22 @@ export const getServerSideProps = async ({ params }) => {
       post,
       relatedPosts
     },
+    revalidate: 10
   };
 };
+
+export const getStaticPaths = async () => {
+  const posts = await getAllPosts(false);
+
+  let paths = posts.map((post) => ({
+      params: {
+          slug: post.slug
+      }
+  })
+  );
+
+  return {
+      paths,
+      fallback: 'blocking'
+  }
+}
