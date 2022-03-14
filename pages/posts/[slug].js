@@ -120,7 +120,7 @@ export const getStaticProps = async ({ params }) => {
       post,
       relatedPosts
     },
-    revalidate: 10
+    revalidate: 1
   };
 };
 

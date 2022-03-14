@@ -131,5 +131,6 @@ export const getStaticProps = async () => {
       posts,
       sectionInfos
     },
+    revalidate: 1
   };
 };

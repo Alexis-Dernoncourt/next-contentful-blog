@@ -57,5 +57,6 @@ export const getStaticProps = async (ctx) => {
       preview,
       posts
     },
+    revalidate: 1
   };
 };
