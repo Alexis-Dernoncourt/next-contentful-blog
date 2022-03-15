@@ -5,7 +5,6 @@ import styled from 'styled-components'
 import { getAllPosts, getPostAndMorePosts } from "../../lib/api";
 import { tablet, mobile, Width1460px } from '../../styles/responsive';
 import Post from '../../components/Post';
-import { useRouter } from 'next/router';
 
 const Container = styled.div`
   display: flex;
@@ -65,16 +64,11 @@ const LoadingText = styled.h4`
 `
 
 const PostByTitle = ({ post, relatedPosts }) => {
-  const router = useRouter();
-
-  const { title, content, date, image } = post
-  return (
-    
-      router.isFallback ? (
-        <LoadingText>
-            Loading...
-        </LoadingText>
-    ) : (
+  if (!post && !relatedPosts) {
+    return <LoadingText>Loading...</LoadingText>
+  } else {
+    const { title, content, date, image } = post
+    return (
       <Container>
         <Title>{title}</Title>
         <DateContent>{'Le ' + new Date(date).toLocaleDateString('fr-FR') + ' à ' + new Date(date).toLocaleTimeString('fr-FR').substring(0, 5)}</DateContent>
@@ -105,7 +99,7 @@ const PostByTitle = ({ post, relatedPosts }) => {
         )}
       </Container>
     )
-  )
+  }
 }
 
 export default PostByTitle
@@ -113,7 +107,16 @@ export default PostByTitle
 
 export const getStaticProps = async ({ params }) => {
   let preview = false
-  const { post, relatedPosts } = await getPostAndMorePosts(preview, params.slug);
+  const { post, relatedPosts } = await getPostAndMorePosts(preview, params.slug) ?? [];
+
+  if (!post) {
+    return {
+      redirect: {
+        destination: '/not-found',
+        permanent: false
+      }
+    }
+  }
 
   return {
     props: {
@@ -136,6 +139,6 @@ export const getStaticPaths = async () => {
 
   return {
       paths,
-      fallback: 'blocking'
+      fallback: true
   }
 }
