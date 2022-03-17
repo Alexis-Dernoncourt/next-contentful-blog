@@ -122,8 +122,7 @@ export const getStaticProps = async ({ params }) => {
     props: {
       post,
       relatedPosts
-    },
-    revalidate: 1
+    }
   };
 };
 
