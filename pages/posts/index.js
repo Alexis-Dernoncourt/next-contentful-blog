@@ -6,10 +6,11 @@ import { mobile, tablet, Width1150px } from '../../styles/responsive'
 
 const Main = styled.main`
   display: flex;
+  flex-wrap: wrap;
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  padding: 5rem 0;
+  padding: 5rem 1.5rem;
   width: 100vw;
   height: calc(100vh - 13rem);
   ${tablet({height: 'max-content'})};
